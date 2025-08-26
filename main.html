@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedBridge NRI - Trusted Medical Consultations for Your Family</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4f46e5;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .nav-cta {
+            background: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .nav-cta:hover {
+            background: #4338ca;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            background: #10b981;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .hero-cta:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Specialty Cards */
+        .specialties {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .specialties h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d3748;
+        }
+
+        .specialty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .specialty-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .specialty-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border-color: #4f46e5;
+        }
+
+        .specialty-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .cardiology .specialty-icon { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .oncology .specialty-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .orthopedic .specialty-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .neurology .specialty-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        /* Screens */
+        .screen {
+            display: none;
+            min-height: 100vh;
+            background: white;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* MOU Screen */
+        .mou {
+            padding: 6rem 0 4rem;
+            background: #f8fafc;
+        }
+
+        .mou-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .mou-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .mou-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .mou-section {
+            margin-bottom: 2rem;
+        }
+
+        .mou-section h3 {
+            color: #4f46e5;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .mou-section p, .mou-section li {
+            line-height: 1.6;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .consent-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .consent-checkbox input {
+            margin-top: 0.25rem;
+        }
+
+        /* Doctor Selection */
+        .doctor-selection {
+            padding: 6rem 0 4rem;
+            background: #f8fafc;
+        }
+
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .doctor-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-4px);
+            border-color: #4f46e5;
+        }
+
+        .doctor-card.selected {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .doctor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .doctor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .doctor-info h3 {
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .doctor-info p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            display: flex;
+            gap: 0.25rem;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .star {
+            color: #fbbf24;
+            font-size: 1.1rem;
+        }
+
+        .reviews-section {
+            margin-top: 1.5rem;
+        }
+
+        .review-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .review-date {
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        /* Scheduling */
+        .scheduling {
+            padding: 6rem 0 4rem;
+            background: #f8fafc;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            background: #f3f4f6;
+        }
+
+        .calendar-day.available {
+            background: #ecfdf5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .calendar-day.selected {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .time-slot {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: #4f46e5;
+        }
+
+        .time-slot.selected {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        /* E-Pharmacy */
+        .pharmacy {
+            padding: 6rem 0 4rem;
+            background: #f8fafc;
+        }
+
+        .medication-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .medication-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .medication-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .med-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .med-price {
+            color: #10b981;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .qty-btn {
+            background: #f3f4f6;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .cart-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 100px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #4f46e5;
+            border: 2px solid #4f46e5;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #4f46e5;
+            color: white;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            padding: 6rem 0 2rem;
+            background: #f8fafc;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .consultation-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .consultation-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .file-upload:hover {
+            border-color: #4f46e5;
+            background: #f8fafc;
+        }
+
+        .file-upload.dragover {
+            border-color: #4f46e5;
+            background: #eff6ff;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #9ca3af;
+            margin-bottom: 1rem;
+        }
+
+        .uploaded-files {
+            margin-top: 1rem;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: #f3f4f6;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 6rem 0 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .specialty-grid, .doctor-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 0.25rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Additional Styles */
+        .back-btn {
+            background: #6b7280;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: #4b5563;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .pharmacy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: #4f46e5;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo" onclick="showScreen('landing')">MedBridge NRI</div>
+                <ul class="nav-links">
+                    <li><a onclick="showScreen('landing')">Home</a></li>
+                    <li><a onclick="showScreen('doctor-selection')">Doctors</a></li>
+                    <li><a onclick="showScreen('pharmacy')">Pharmacy</a></li>
+                    <li><a onclick="showScreen('dashboard')">Dashboard</a></li>
+                </ul>
+                <button class="nav-cta" onclick="showScreen('mou')">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Screen -->
+    <div class="screen active" id="landing">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="fade-in-up">Expert Medical Care for Your Family in India</h1>
+                <p class="fade-in-up">Connect with India's top specialists for second opinions. Trusted consultations with verified reviews from the NRI community.</p>
+                <button class="hero-cta fade-in-up" onclick="showScreen('mou')">Start Consultation</button>
+            </div>
+        </section>
+
+        <!-- Specialties Section -->
+        <section class="specialties" id="specialties">
+            <div class="container">
+                <h2>Medical Specialties</h2>
+                <div class="specialty-grid">
+                    <div class="specialty-card cardiology" onclick="selectSpecialty('cardiology')">
+                        <div class="specialty-icon">❤️</div>
+                        <h3>Cardiology</h3>
+                        <p>Heart conditions, coronary artery disease, hypertension, cardiac surgery consultations</p>
+                        <div class="rating">
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span style="margin-left: 0.5rem; color: #6b7280;">4.8/5 (247 reviews)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="specialty-card oncology" onclick="selectSpecialty('oncology')">
+                        <div class="specialty-icon">🎗️</div>
+                        <h3>Oncology</h3>
+                        <p>Cancer diagnosis, treatment planning, chemotherapy, radiation therapy consultations</p>
+                        <div class="rating">
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span style="margin-left: 0.5rem; color: #6b7280;">4.9/5 (189 reviews)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="specialty-card orthopedic" onclick="selectSpecialty('orthopedic')">
+                        <div class="specialty-icon">🦴</div>
+                        <h3>Orthopedics</h3>
+                        <p>Bone & joint issues, arthritis, fractures, joint replacement consultations</p>
+                        <div class="rating">
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span style="margin-left: 0.5rem; color: #6b7280;">4.7/5 (156 reviews)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="specialty-card neurology" onclick="selectSpecialty('neurology')">
+                        <div class="specialty-icon">🧠</div>
+                        <h3>Neurology</h3>
+                        <p>Brain & nervous system, stroke, epilepsy, dementia, Parkinson's consultations</p>
+                        <div class="rating">
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span style="margin-left: 0.5rem; color: #6b7280;">4.8/5 (203 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MOU Screen -->
+    <div class="screen" id="mou">
+        <section class="mou">
+            <div class="mou-container">
+                <button class="back-btn" onclick="showScreen('landing')">← Back</button>
+                <div class="mou-content">
+                    <div class="mou-header">
+                        <h1>Medical Consultation Agreement</h1>
+                        <p style="color: #6b7280;">Please read and accept the following terms before proceeding</p>
+                    </div>
+
+                    <div class="mou-section">
+                        <h3>1. Service Overview</h3>
+                        <p>MedBridge NRI provides second opinion consultations with verified specialists in India. This service facilitates remote medical consultations for NRI families seeking expert medical advice for their relatives in India.</p>
+                    </div>
+
+                    <div class="mou-section">
+                        <h3>2. Medical Disclaimer</h3>
+                        <ul>
+                            <li>Consultations are for second opinion purposes only</li>
+                            <li>This does not replace in-person medical care or emergency services</li>
+                            <li>Doctors provide recommendations based on information provided</li>
+                            <li>Final treatment decisions should involve local healthcare providers</li>
+                        </ul>
+                    </div>
+
+                    <div class="mou-section">
+                        <h3>3. Privacy & Data Security</h3>
+                        <ul>
+                            <li>All medical information is encrypted and HIPAA compliant</li>
+                            <li>Doctor-patient confidentiality is strictly maintained</li>
+                            <li>Reviews are anonymous and cannot be traced back to patients</li>
+                            <li>Medical records are stored securely and not shared without consent</li>
+                        </ul>
+                    </div>
+
+                    <div class="mou-section">
+                        <h3>4. Payment Terms</h3>
+                        <ul>
+                            <li>Consultation fees are paid upfront via secure payment gateway</li>
+                            <li>Refunds available if consultation cannot be completed due to technical issues</li>
+                            <li>Prescription delivery charges are separate if pharmacy services are used</li>
+                        </ul>
+                    </div>
+
+                    <div class="mou-section">
+                        <h3>5. Doctor Verification</h3>
+                        <ul>
+                            <li>All doctors are verified with valid medical licenses</li>
+                            <li>Hospital affiliations and credentials are authenticated</li>
+                            <li>Continuous monitoring of doctor performance and patient feedback</li>
+                        </ul>
+                    </div>
+
+                    <div class="consent-checkbox">
+                        <input type="checkbox" id="consentTerms">
+                        <label for="consentTerms">I have read and agree to the Medical Consultation Agreement and understand that this service provides second opinion consultations only.</label>
+                    </div>
+
+                    <div class="consent-checkbox">
+                        <input type="checkbox" id="consentPrivacy">
+                        <label for="consentPrivacy">I consent to the collection and processing of medical information for consultation purposes and agree to the Privacy Policy.</label>
+                    </div>
+
+                    <div class="consent-checkbox">
+                        <input type="checkbox" id="consentReviews">
+                        <label for="consentReviews">I agree that my consultation may be reviewed anonymously to help other patients make informed decisions about doctor selection.</label>
+                    </div>
+
+                    <button class="btn-primary" onclick="proceedFromMOU()" id="mouProceedBtn" disabled>Accept & Continue</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Doctor Selection Screen -->
+    <div class="screen" id="doctor-selection">
+        <section class="doctor-selection">
+            <div class="container">
+                <button class="back-btn" onclick="showScreen('mou')">← Back</button>
+                <div class="section-header">
+                    <h2>Select Your Specialist</h2>
+                    <p>Choose from our verified doctors based on specialty, experience, and patient reviews</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Filter by Specialty</label>
+                    <select id="specialtyFilter" onchange="filterDoctors()">
+                        <option value="">All Specialties</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="oncology">Oncology</option>
+                        <option value="orthopedic">Orthopedics</option>
+                        <option value="neurology">Neurology</option>
+                    </select>
+                </div>
+
+                <div class="doctor-grid" id="doctorGrid">
+                    <!-- Doctors will be populated by JavaScript -->
+                </div>
+
+                <button class="btn-primary" onclick="proceedToScheduling()" id="selectDoctorBtn" style="display: none; margin-top: 2rem;">Schedule Consultation</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scheduling Screen -->
+    <div class="screen" id="scheduling">
+        <section class="scheduling">
+            <div class="container">
+                <button class="back-btn" onclick="showScreen('doctor-selection')">← Back</button>
+                <div class="section-header">
+                    <h2>Schedule Your Consultation</h2>
+                    <p>Select your preferred date and time for the video consultation</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 300px; gap: 3rem;">
+                    <div>
+                        <div id="selectedDoctorInfo" style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                            <!-- Selected doctor info will be populated -->
+                        </div>
+
+                        <h3 style="margin-bottom: 1rem;">Select Date</h3>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be populated by JavaScript -->
+                        </div>
+
+                        <h3 style="margin: 2rem 0 1rem;">Available Time Slots</h3>
+                        <div class="time-slots" id="timeSlots">
+                            <!-- Time slots will be populated based on selected date -->
+                        </div>
+
+                        <div style="background: white; padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                            <h3 style="margin-bottom: 1rem;">Patient Information</h3>
+                            <div class="form-group">
+                                <label>Patient's Name</label>
+                                <input type="text" id="patientName" placeholder="Enter patient's full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" id="patientAge" placeholder="Enter age">
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select id="patientGender">
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Current symptoms or concerns</label>
+                                <textarea id="symptoms" rows="4" placeholder="Please describe the patient's current symptoms, concerns, or the reason for seeking a second opinion..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Current medications (if any)</label>
+                                <textarea id="medications" rows="3" placeholder="List any current medications, dosages, and frequency..."></textarea>
+                            </div>
+
+                            <h3 style="margin: 2rem 0 1rem;">Upload Medical Documents</h3>
+                            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                                <div class="upload-icon">📄</div>
+                                <h4>Drop files here or click to upload</h4>
+                                <p style="color: #6b7280; margin-top: 0.5rem;">Lab reports, test results, previous consultations, X-rays, MRI scans</p>
+                                <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.png,.doc,.docx" style="display: none;">
+                            </div>
+                            <div class="uploaded-files" id="uploadedFiles"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="background: white; padding: 2rem; border-radius: 12px; position: sticky; top: 100px;">
+                            <h3 style="margin-bottom: 1rem;">Consultation Summary</h3>
+                            <div style="padding: 1rem; background: #f8fafc; border-radius: 8px; margin-bottom: 1rem;">
+                                <p><strong>Doctor:</strong> <span id="summaryDoctor">Select a doctor</span></p>
+                                <p><strong>Date:</strong> <span id="summaryDate">Select a date</span></p>
+                                <p><strong>Time:</strong> <span id="summaryTime">Select a time</span></p>
+                                <p><strong>Duration:</strong> 45 minutes</p>
+                                <hr style="margin: 1rem 0; border: none; height: 1px; background: #e5e7eb;">
+                                <p><strong>Consultation Fee:</strong> ₹2,499</p>
+                                <p><strong>Platform Fee:</strong> ₹299</p>
+                                <p style="font-weight: 700; color: #4f46e5;"><strong>Total:</strong> ₹2,798</p>
+                            </div>
+                            <button class="btn-primary" onclick="confirmBooking()" id="bookingBtn" disabled>Confirm & Pay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- E-Pharmacy Screen -->
+    <div class="screen" id="pharmacy">
+        <section class="pharmacy">
+            <div class="container">
+                <div class="pharmacy-header">
+                    <div class="section-header" style="text-align: left; margin: 0;">
+                        <h2>MedBridge Pharmacy</h2>
+                        <p>Order prescribed medications with home delivery across India</p>
+                    </div>
+                    <div class="cart-icon" onclick="toggleCart()">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 350px; gap: 3rem;">
+                    <div>
+                        <div class="form-group">
+                            <label>Search Medications</label>
+                            <input type="text" id="medicationSearch" placeholder="Search for medications..." onkeyup="searchMedications()">
+                        </div>
+
+                        <div class="medication-grid" id="medicationGrid">
+                            <!-- Medications will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div id="cartSidebar">
+                        <div class="cart-summary">
+                            <h3 style="margin-bottom: 1rem;">Your Cart</h3>
+                            <div id="cartItems">
+                                <p style="color: #6b7280; text-align: center; padding: 2rem;">Cart is empty</p>
+                            </div>
+                            <hr style="margin: 1rem 0; border: none; height: 1px; background: #e5e7eb;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Subtotal:</span>
+                                <span id="cartSubtotal">₹0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Delivery:</span>
+                                <span id="deliveryFee">₹99</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-weight: 700; color: #4f46e5;">
+                                <span>Total:</span>
+                                <span id="cartTotal">₹0</span>
+                            </div>
+                            <button class="btn-primary" onclick="proceedToPharmacyCheckout()" id="checkoutBtn" disabled style="margin-top: 1rem;">Proceed to Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div class="screen" id="dashboard">
+        <section class="dashboard">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>Welcome back, <span id="userName">Rajesh</span></h1>
+                    <p style="color: #6b7280; margin-top: 0.5rem;">Managing care for your family in India</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div>Consultations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div>Upcoming</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.8★</div>
+                        <div>Avg Rating</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">₹12,495</div>
+                        <div>Total Spent</div>
+                    </div>
+                </div>
+
+                <h2 style="margin-bottom: 2rem;">Recent Consultations</h2>
+
+                <div class="consultation-card">
+                    <div class="doctor-header">
+                        <div class="doctor-avatar">DR</div>
+                        <div>
+                            <h3>Dr. Ramesh Kumar</h3>
+                            <p style="color: #6b7280;">Cardiologist • AIIMS Delhi</p>
+                            <div class="rating">
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span style="margin-left: 0.5rem; color: #6b7280;">5.0/5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>Patient:</strong> Sunita Sharma (Mother, 68)</p>
+                    <p><strong>Consultation:</strong> Hypertension management & cardiac assessment</p>
+                    <p><strong>Date:</strong> March 15, 2024</p>
+                    <p><strong>Status:</strong> <span style="color: #10b981; font-weight: 600;">Completed</span></p>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button style="background: #f3f4f6; color: #374151; padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer;">View Report</button>
+                        <button style="background: #4f46e5; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer;" onclick="showScreen('pharmacy')">Order Medications</button>
+                    </div>
+                </div>
+
+                <div class="consultation-card">
+                    <div class="doctor-header">
+                        <div class="doctor-avatar">DS</div>
+                        <div>
+                            <h3>Dr. Meera Patel</h3>
+                            <p style="color: #6b7280;">Oncologist • Tata Memorial Hospital</p>
+                            <div class="rating">
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span style="margin-left: 0.5rem; color: #6b7280;">4.9/5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>Patient:</strong> Rajesh Sharma (Father, 72)</p>
+                    <p><strong>Consultation:</strong> Post-surgery follow-up & treatment plan review</p>
+                    <p><strong>Date:</strong> March 20, 2024 at 3:00 PM IST</p>
+                    <p><strong>Status:</strong> <span style="color: #f59e0b; font-weight: 600;">Upcoming</span></p>
+                    <button style="background: #4f46e5; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; margin-top: 1rem; cursor: pointer;" onclick="startVideoCall()">Join Video Call</button>
+                </div>
+
+                <button class="btn-primary" onclick="showScreen('mou')" style="margin-top: 2rem;">Book New Consultation</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedSpecialty = '';
+        let selectedDoctor = null;
+        let selectedDate = null;
+        let selectedTime = null;
+        let uploadedFiles = [];
+        let cart = [];
+        let currentStep = 1;
+
+        // Doctor database
+        const doctors = [
+            {
+                id: 1,
+                name: "Dr. Ramesh Kumar",
+                specialty: "cardiology",
+                hospital: "AIIMS Delhi",
+                experience: "15+ years",
+                rating: 4.9,
+                reviews: 247,
+                consultationFee: 2499,
+                avatar: "RK",
+                availableDays: [1, 2, 3, 4, 5], // Mon-Fri
+                timeSlots: ["09:00", "10:30", "14:00", "15:30", "17:00"],
+                patientReviews: [
+                    {
+                        author: "Priya S. (USA)",
+                        rating: 5,
+                        date: "2 weeks ago",
+                        text: "Dr. Kumar provided excellent cardiac consultation for my father. Very thorough assessment and clear explanation of treatment options."
+                    },
+                    {
+                        author: "Amit P. (Canada)",
+                        rating: 5,
+                        date: "1 month ago", 
+                        text: "Professional and caring. The video consultation was seamless and prescription delivery was prompt."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: "Dr. Meera Patel",
+                specialty: "oncology",
+                hospital: "Tata Memorial Hospital",
+                experience: "12+ years",
+                rating: 4.8,
+                reviews: 189,
+                consultationFee: 2999,
+                avatar: "MP",
+                availableDays: [1, 2, 3, 5, 6],
+                timeSlots: ["10:00", "11:30", "15:00", "16:30"],
+                patientReviews: [
+                    {
+                        author: "Rohit M. (UK)",
+                        rating: 5,
+                        date: "3 days ago",
+                        text: "Dr. Patel's oncology expertise gave us hope during a difficult time. Second opinion was invaluable for treatment planning."
+                    },
+                    {
+                        author: "Sneha K. (Australia)",
+                        rating: 4,
+                        date: "2 weeks ago",
+                        text: "Very knowledgeable and empathetic. Explained complex cancer treatment options in simple terms."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: "Dr. Vikash Singh",
+                specialty: "orthopedic",
+                hospital: "Max Super Specialty Hospital",
+                experience: "18+ years",
+                rating: 4.7,
+                reviews: 156,
+                consultationFee: 2299,
+                avatar: "VS",
+                availableDays: [1, 3, 4, 5, 6],
+                timeSlots: ["09:30", "11:00", "14:30", "16:00", "17:30"],
+                patientReviews: [
+                    {
+                        author: "Kiran L. (UAE)",
+                        rating: 5,
+                        date: "1 week ago",
+                        text: "Excellent orthopedic consultation for my mother's knee replacement. Dr. Singh provided detailed pre-surgery guidance."
+                    }
+                ]
+            },
+            {
+                id: 4,
+                name: "Dr. Anjali Sharma",
+                specialty: "neurology",
+                hospital: "Fortis Hospital",
+                experience: "14+ years",
+                rating: 4.8,
+                reviews: 203,
+                consultationFee: 2699,
+                avatar: "AS",
+                availableDays: [1, 2, 4, 5, 6],
+                timeSlots: ["10:00", "11:30", "15:00", "16:30", "18:00"],
+                patientReviews: [
+                    {
+                        author: "Rajesh T. (USA)",
+                        rating: 5,
+                        date: "5 days ago",
+                        text: "Dr. Sharma's neurology expertise helped diagnose my father's condition. Excellent bedside manner via video call."
+                    }
+                ]
+            },
+            {
+                id: 5,
+                name: "Dr. Suresh Reddy",
+                specialty: "cardiology",
+                hospital: "Apollo Hospital",
+                experience: "20+ years",
+                rating: 4.9,
+                reviews: 312,
+                consultationFee: 3199,
+                avatar: "SR",
+                availableDays: [2, 3, 4, 5, 6],
+                timeSlots: ["08:30", "10:00", "14:00", "15:30", "17:00"],
+                patientReviews: [
+                    {
+                        author: "Maya V. (Singapore)",
+                        rating: 5,
+                        date: "1 week ago",
+                        text: "Top-notch cardiology consultation. Dr. Reddy's experience shows in his thorough approach and clear recommendations."
+                    }
+                ]
+            },
+            {
+                id: 6,
+                name: "Dr. Kavitha Menon",
+                specialty: "oncology",
+                hospital: "HCG Cancer Centre",
+                experience: "16+ years",
+                rating: 4.8,
+                reviews: 198,
+                consultationFee: 2799,
+                avatar: "KM",
+                availableDays: [1, 2, 3, 4, 6],
+                timeSlots: ["09:00", "10:30", "15:00", "16:30"],
+                patientReviews: [
+                    {
+                        author: "Deepak N. (Germany)",
+                        rating: 5,
+                        date: "4 days ago",
+                        text: "Dr. Menon provided comprehensive oncology consultation. Her expertise in cancer treatment protocols is exceptional."
+                    }
+                ]
+            }
+        ];
+
+        // Medication database
+        const medications = [
+            {
+                id: 1,
+                name: "Atorvastatin 20mg",
+                category: "Cardiology",
+                price: 245,
+                originalPrice: 289,
+                description: "Cholesterol-lowering medication",
+                manufacturer: "Sun Pharma",
+                prescription: true,
+                inStock: true,
+                image: "💊"
+            },
+            {
+                id: 2,
+                name: "Metformin 500mg",
+                category: "Diabetes",
+                price: 156,
+                originalPrice: 189,
+                description: "Blood sugar control medication",
+                manufacturer: "Cipla",
+                prescription: true,
+                inStock: true,
+                image: "💊"
+            },
+            {
+                id: 3,
+                name: "Paracetamol 650mg",
+                category: "Pain Relief",
+                price: 45,
+                originalPrice: 52,
+                description: "Pain and fever relief",
+                manufacturer: "Cadila",
+                prescription: false,
+                inStock: true,
+                image: "💊"
+            },
+            {
+                id: 4,
+                name: "Tamoxifen 20mg",
+                category: "Oncology",
+                price: 892,
+                originalPrice: 1050,
+                description: "Breast cancer treatment",
+                manufacturer: "Dr. Reddy's",
+                prescription: true,
+                inStock: true,
+                image: "💊"
+            },
+            {
+                id: 5,
+                name: "Calcium Carbonate",
+                category: "Orthopedics",
+                price: 189,
+                originalPrice: 225,
+                description: "Bone health supplement",
+                manufacturer: "Abbott",
+                prescription: false,
+                inStock: true,
+                image: "💊"
+            },
+            {
+                id: 6,
+                name: "Levetiracetam 500mg",
+                category: "Neurology",
+                price: 567,
+                originalPrice: 650,
+                description: "Anti-seizure medication",
+                manufacturer: "Lupin",
+                prescription: true,
+                inStock: true,
+                image: "💊"
+            }
+        ];
+
+        // Screen management
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            
+            // Initialize screen-specific content
+            if (screenId === 'doctor-selection') {
+                loadDoctors();
+            } else if (screenId === 'pharmacy') {
+                loadMedications();
+            } else if (screenId === 'scheduling') {
+                loadCalendar();
+                updateSelectedDoctorInfo();
+            }
+        }
+
+        // MOU functionality
+        function checkMOUConsent() {
+            const terms = document.getElementById('consentTerms').checked;
+            const privacy = document.getElementById('consentPrivacy').checked;
+            const reviews = document.getElementById('consentReviews').checked;
+            
+            document.getElementById('mouProceedBtn').disabled = !(terms && privacy && reviews);
+        }
+
+        function proceedFromMOU() {
+            if (document.getElementById('consentTerms').checked && 
+                document.getElementById('consentPrivacy').checked && 
+                document.getElementById('consentReviews').checked) {
+                showScreen('doctor-selection');
+            }
+        }
+
+        // Specialty selection
+        function selectSpecialty(specialty) {
+            selectedSpecialty = specialty;
+            localStorage.setItem('selectedSpecialty', specialty);
+            showScreen('mou');
+        }
+
+        // Doctor management
+        function loadDoctors() {
+            const grid = document.getElementById('doctorGrid');
+            const filter = document.getElementById('specialtyFilter').value;
+            
+            let filteredDoctors = doctors;
+            if (filter) {
+                filteredDoctors = doctors.filter(doc => doc.specialty === filter);
+            } else if (selectedSpecialty) {
+                filteredDoctors = doctors.filter(doc => doc.specialty === selectedSpecialty);
+                document.getElementById('specialtyFilter').value = selectedSpecialty;
+            }
+            
+            grid.innerHTML = filteredDoctors.map(doctor => `
+                <div class="doctor-card" onclick="selectDoctor(${doctor.id})" id="doctor-${doctor.id}">
+                    <div class="doctor-header">
+                        <div class="doctor-avatar">${doctor.avatar}</div>
+                        <div class="doctor-info">
+                            <h3>${doctor.name}</h3>
+                            <p>${doctor.specialty.charAt(0).toUpperCase() + doctor.specialty.slice(1)} • ${doctor.hospital}</p>
+                            <p>${doctor.experience} experience</p>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        ${Array(5).fill('⭐').join('')}
+                        <span style="margin-left: 0.5rem; color: #6b7280;">${doctor.rating}/5 (${doctor.reviews} reviews)</span>
+                    </div>
+                    <p style="margin: 1rem 0; color: #4f46e5; font-weight: 600;">Consultation Fee: ₹${doctor.consultationFee}</p>
+                    
+                    <div class="reviews-section">
+                        <h4 style="margin-bottom: 1rem;">Recent Reviews</h4>
+                        ${doctor.patientReviews.map(review => `
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <span class="review-author">${review.author}</span>
+                                    <span class="review-date">${review.date}</span>
+                                </div>
+                                <div class="rating">
+                                    ${Array(review.rating).fill('⭐').join('')}
+                                </div>
+                                <p>${review.text}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterDoctors() {
+            loadDoctors();
+        }
+
+        function selectDoctor(doctorId) {
+            // Remove previous selection
+            document.querySelectorAll('.doctor-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select new doctor
+            document.getElementById(`doctor-${doctorId}`).classList.add('selected');
+            selectedDoctor = doctors.find(doc => doc.id === doctorId);
+            
+            // Show proceed button
+            document.getElementById('selectDoctorBtn').style.display = 'block';
+        }
+
+        function proceedToScheduling() {
+            if (selectedDoctor) {
+                showScreen('scheduling');
+            }
+        }
+
+        // Calendar and scheduling
+        function loadCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            
+            // Generate next 21 days
+            let calendarHTML = '';
+            for (let i = 0; i < 21; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                const dayOfWeek = date.getDay();
+                const isAvailable = selectedDoctor && selectedDoctor.availableDays.includes(dayOfWeek === 0 ? 7 : dayOfWeek);
+                
+                calendarHTML += `
+                    <div class="calendar-day ${isAvailable ? 'available' : ''}" 
+                         onclick="${isAvailable ? `selectDate('${date.toISOString().split('T')[0]}')` : ''}"
+                         id="date-${date.toISOString().split('T')[0]}">
+                        <div style="font-size: 0.8rem; color: #6b7280;">${date.toLocaleDateString('en', {weekday: 'short'})}</div>
+                        <div style="font-weight: 600;">${date.getDate()}</div>
+                    </div>
+                `;
+            }
+            
+            grid.innerHTML = calendarHTML;
+        }
+
+        function selectDate(dateString) {
+            // Remove previous selection
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Select new date
+            document.getElementById(`date-${dateString}`).classList.add('selected');
+            selectedDate = dateString;
+            
+            // Update summary
+            document.getElementById('summaryDate').textContent = new Date(dateString).toLocaleDateString('en', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Load time slots
+            loadTimeSlots();
+            updateBookingButton();
+        }
+
+        function loadTimeSlots() {
+            const slotsContainer = document.getElementById('timeSlots');
+            if (!selectedDoctor) return;
+            
+            slotsContainer.innerHTML = selectedDoctor.timeSlots.map(slot => `
+                <div class="time-slot" onclick="selectTime('${slot}')" id="time-${slot}">
+                    ${slot}
+                </div>
+            `).join('');
+        }
+
+        function selectTime(timeString) {
+            // Remove previous selection
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            
+            // Select new time
+            document.getElementById(`time-${timeString}`).classList.add('selected');
+            selectedTime = timeString;
+            
+            // Update summary
+            document.getElementById('summaryTime').textContent = timeString;
+            updateBookingButton();
+        }
+
+        function updateSelectedDoctorInfo() {
+            if (!selectedDoctor) return;
+            
+            document.getElementById('selectedDoctorInfo').innerHTML = `
+                <div class="doctor-header">
+                    <div class="doctor-avatar">${selectedDoctor.avatar}</div>
+                    <div>
+                        <h3>${selectedDoctor.name}</h3>
+                        <p style="color: #6b7280;">${selectedDoctor.specialty.charAt(0).toUpperCase() + selectedDoctor.specialty.slice(1)} • ${selectedDoctor.hospital}</p>
+                        <div class="rating">
+                            ${Array(5).fill('⭐').join('')}
+                            <span style="margin-left: 0.5rem; color: #6b7280;">${selectedDoctor.rating}/5</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('summaryDoctor').textContent = selectedDoctor.name;
+        }
+
+        function updateBookingButton() {
+            const btn = document.getElementById('bookingBtn');
+            const patientName = document.getElementById('patientName').value;
+            const patientAge = document.getElementById('patientAge').value;
+            const symptoms = document.getElementById('symptoms').value;
+            
+            btn.disabled = !(selectedDate && selectedTime && patientName && patientAge && symptoms);
+        }
+
+        function confirmBooking() {
+            const patientData = {
+                name: document.getElementById('patientName').value,
+                age: document.getElementById('patientAge').value,
+                gender: document.getElementById('patientGender').value,
+                symptoms: document.getElementById('symptoms').value,
+                medications: document.getElementById('medications').value
+            };
+            
+            // Save booking data
+            localStorage.setItem('bookingData', JSON.stringify({
+                doctor: selectedDoctor,
+                date: selectedDate,
+                time: selectedTime,
+                patient: patientData,
+                files: uploadedFiles
+            }));
+            
+            // Simulate payment process
+            alert(`Booking confirmed!\n\nDoctor: ${selectedDoctor.name}\nDate: ${new Date(selectedDate).toLocaleDateString()}\nTime: ${selectedTime}\n\nTotal Paid: ₹2,798\n\nYou will receive confirmation email and calendar invite.`);
+            showScreen('dashboard');
+        }
+
+        // E-Pharmacy functionality
+        function loadMedications() {
+            const grid = document.getElementById('medicationGrid');
+            grid.innerHTML = medications.map(med => `
+                <div class="medication-card">
+                    <div class="med-header">
+                        <div>
+                            <h3>${med.name}</h3>
+                            <p style="color: #6b7280; font-size: 0.9rem;">${med.description}</p>
+                            <p style="color: #10b981; font-size: 0.8rem; margin-top: 0.5rem;">by ${med.manufacturer}</p>
+                            ${med.prescription ? '<span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">Prescription Required</span>' : ''}
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="med-price">₹${med.price}</div>
+                            <div style="color: #9ca3af; text-decoration: line-through; font-size: 0.9rem;">₹${med.originalPrice}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="changeQuantity(${med.id}, -1)">-</button>
+                        <span id="qty-${med.id}">1</span>
+                        <button class="qty-btn" onclick="changeQuantity(${med.id}, 1)">+</button>
+                        <button style="background: #4f46e5; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; margin-left: auto; cursor: pointer;" onclick="addToCart(${med.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchMedications() {
+            const searchTerm = document.getElementById('medicationSearch').value.toLowerCase();
+            const grid = document.getElementById('medicationGrid');
+            
+            const filteredMeds = medications.filter(med => 
+                med.name.toLowerCase().includes(searchTerm) || 
+                med.category.toLowerCase().includes(searchTerm) ||
+                med.description.toLowerCase().includes(searchTerm)
+            );
+            
+            grid.innerHTML = filteredMeds.map(med => `
+                <div class="medication-card">
+                    <div class="med-header">
+                        <div>
+                            <h3>${med.name}</h3>
+                            <p style="color: #6b7280; font-size: 0.9rem;">${med.description}</p>
+                            <p style="color: #10b981; font-size: 0.8rem; margin-top: 0.5rem;">by ${med.manufacturer}</p>
+                            ${med.prescription ? '<span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">Prescription Required</span>' : ''}
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="med-price">₹${med.price}</div>
+                            <div style="color: #9ca3af; text-decoration: line-through; font-size: 0.9rem;">₹${med.originalPrice}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="changeQuantity(${med.id}, -1)">-</button>
+                        <span id="qty-${med.id}">1</span>
+                        <button class="qty-btn" onclick="changeQuantity(${med.id}, 1)">+</button>
+                        <button style="background: #4f46e5; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; margin-left: auto; cursor: pointer;" onclick="addToCart(${med.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeQuantity(medId, change) {
+            const qtyElement = document.getElementById(`qty-${medId}`);
+            let currentQty = parseInt(qtyElement.textContent);
+            currentQty = Math.max(1, currentQty + change);
+            qtyElement.textContent = currentQty;
+        }
+
+        function addToCart(medId) {
+            const medication = medications.find(med => med.id === medId);
+            const quantity = parseInt(document.getElementById(`qty-${medId}`).textContent);
+            
+            const existingItem = cart.find(item => item.id === medId);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({...medication, quantity});
+            }
+            
+            updateCartDisplay();
+            alert(`${medication.name} added to cart!`);
+        }
+
+        function removeFromCart(medId) {
+            cart = cart.filter(item => item.id !== medId);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 2rem;">Cart is empty</p>';
+                cartCount.textContent = '0';
+                cartSubtotal.textContent = '₹0';
+                cartTotal.textContent = '₹0';
+                checkoutBtn.disabled = true;
+            } else {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const deliveryFee = 99;
+                const total = subtotal + deliveryFee;
+                
+                cartItems.innerHTML = cart.map(item => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
+                        <div>
+                            <div style="font-weight: 600;">${item.name}</div>
+                            <div style="color: #6b7280; font-size: 0.85rem;">Qty: ${item.quantity}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600;">₹${item.price * item.quantity}</div>
+                            <button onclick="removeFromCart(${item.id})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 0.8rem;">Remove</button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                cartCount.textContent = totalItems;
+                cartSubtotal.textContent = `₹${subtotal}`;
+                cartTotal.textContent = `₹${total}`;
+                checkoutBtn.disabled = false;
+            }
+        }
+
+        function proceedToPharmacyCheckout() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal + 99;
+            
+            alert(`Order Summary:\n\nItems: ${cart.length}\nSubtotal: ₹${subtotal}\nDelivery: ₹99\nTotal: ₹${total}\n\nPrescription verification and delivery address collection would happen next.\n\nEstimated delivery: 2-3 days`);
+        }
+
+        function toggleCart() {
+            // Cart is always visible in this layout
+        }
+
+        // File upload functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadedFilesDiv = document.getElementById('uploadedFiles');
+            const fileUpload = document.querySelector('.file-upload');
+
+            if (fileInput && uploadedFilesDiv && fileUpload) {
+                fileInput.addEventListener('change', handleFiles);
+
+                // Drag and drop functionality
+                fileUpload.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    fileUpload.classList.add('dragover');
+                });
+
+                fileUpload.addEventListener('dragleave', () => {
+                    fileUpload.classList.remove('dragover');
+                });
+
+                fileUpload.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    fileUpload.classList.remove('dragover');
+                    handleFiles({ target: { files: e.dataTransfer.files } });
+                });
+            }
+
+            function handleFiles(event) {
+                const files = Array.from(event.target.files);
+                files.forEach(file => {
+                    uploadedFiles.push(file);
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                        <button onclick="removeFile('${file.name}')" style="background: none; border: none; color: #ef4444; cursor: pointer;">Remove</button>
+                    `;
+                    uploadedFilesDiv.appendChild(fileItem);
+                });
+                updateBookingButton();
+            }
+
+            window.removeFile = function(fileName) {
+                uploadedFiles = uploadedFiles.filter(file => file.name !== fileName);
+                updateUploadedFilesDisplay();
+                updateBookingButton();
+            };
+
+            function updateUploadedFilesDisplay() {
+                if (uploadedFilesDiv) {
+                    uploadedFilesDiv.innerHTML = '';
+                    uploadedFiles.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        fileItem.innerHTML = `
+                            <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                            <button onclick="removeFile('${file.name}')" style="background: none; border: none; color: #ef4444; cursor: pointer;">Remove</button>
+                        `;
+                        uploadedFilesDiv.appendChild(fileItem);
+                    });
+                }
+            }
+
+            // MOU consent checking
+            const consentCheckboxes = ['consentTerms', 'consentPrivacy', 'consentReviews'];
+            consentCheckboxes.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('change', checkMOUConsent);
+                }
+            });
+
+            // Form input listeners for booking validation
+            const bookingInputs = ['patientName', 'patientAge', 'symptoms'];
+            bookingInputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', updateBookingButton);
+                }
+            });
+        });
+
+        // Video call simulation
+        function startVideoCall() {
+            alert('🎥 Connecting to video call...\n\n✅ Camera and microphone ready\n✅ Doctor joining the call\n✅ Medical documents shared securely\n\nIn the actual app, this would launch the secure video consultation interface with:\n• HD video calling\n• Screen sharing for reports\n• Digital prescription generation\n• Consultation recording (with consent)\n• Real-time chat');
+            
+            // Simulate call completion after demo
+            setTimeout(() => {
+                const rating = prompt('Rate your consultation experience (1-5 stars):');
+                if (rating && rating >= 1 && rating <= 5) {
+                    alert(`Thank you for rating ${rating}/5 stars! Your anonymous feedback helps other NRI families choose the right doctors.`);
+                }
+            }, 3000);
+        }
+
+        // Demo data loader
+        function loadDemoData() {
+            document.getElementById('patientName').value = 'Sunita Sharma';
+            document.getElementById('patientAge').value = '68';
+            document.getElementById('patientGender').value = 'female';
+            document.getElementById('symptoms').value = 'Experiencing chest pain and shortness of breath during physical activity. Blood pressure has been elevated recently.';
+            document.getElementById('medications').value = 'Currently taking Amlodipine 5mg daily for blood pressure';
+        }
+
+        // Initialize app
+        window.addEventListener('load', function() {
+            // Set up demo data if needed
+            if (localStorage.getItem('demoMode')) {
+                document.getElementById('userName').textContent = 'Rajesh Patel';
+            }
+            
+            // Initialize pharmacy
+            updateCartDisplay();
+        });
+
+        // Export functions to global scope
+        window.showScreen = showScreen;
+        window.selectSpecialty = selectSpecialty;
+        window.proceedFromMOU = proceedFromMOU;
+        window.loadDoctors = loadDoctors;
+        window.filterDoctors = filterDoctors;
+        window.selectDoctor = selectDoctor;
+        window.proceedToScheduling = proceedToScheduling;
+        window.selectDate = selectDate;
+        window.selectTime = selectTime;
+        window.confirmBooking = confirmBooking;
+        window.loadMedications = loadMedications;
+        window.searchMedications = searchMedications;
+        window.changeQuantity = changeQuantity;
+        window.addToCart = addToCart;
+        window.removeFromCart = removeFromCart;
+        window.proceedToPharmacyCheckout = proceedToPharmacyCheckout;
+        window.toggleCart = toggleCart;
+        window.startVideoCall = startVideoCall;
+        window.loadDemoData = loadDemoData;
+        window.updateBookingButton = updateBookingButton;
+    </script>
+</body>
+</html>
