@@ -363,6 +363,7 @@
         .calendar-day {
             aspect-ratio: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             border: 1px solid #e5e7eb;
@@ -771,7 +772,43 @@
             <div class="container">
                 <h1 class="fade-in-up">Expert Medical Care for Your Family in India</h1>
                 <p class="fade-in-up">Connect with India's top specialists for second opinions. Trusted consultations with verified reviews from the NRI community.</p>
-                <button class="hero-cta fade-in-up" onclick="showScreen('mou')">Start Consultation</button>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section style="background: white; padding: 4rem 0 2rem 0;">
+            <div class="container">
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: #2d3748;">Welcome to Medbridge – Your Trusted Second Opinion Partner</h2>
+                    
+                    <p style="font-size: 1.1rem; line-height: 1.6; color: #4a5568; margin-bottom: 2rem;">Making the right healthcare decision can be overwhelming. Medbridge is designed exclusively to help you seek a second expert opinion—whether it's about choosing the right surgical, interventional, laparoscopic procedure, or continuing with medication.</p>
+                    
+                    <h3 style="color: #4f46e5; margin: 2.5rem 0 1.5rem; font-size: 1.5rem;">With Medbridge:</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0; text-align: left;">
+                        <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid #4f46e5;">
+                            <div style="color: #4f46e5; font-size: 2rem; margin-bottom: 1rem;">👨‍⚕️</div>
+                            <p style="color: #4a5568; line-height: 1.6;">Connect with multiple expert doctors across diverse medical specialties.</p>
+                        </div>
+                        
+                        <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid #10b981;">
+                            <div style="color: #10b981; font-size: 2rem; margin-bottom: 1rem;">📋</div>
+                            <p style="color: #4a5568; line-height: 1.6;">Upload your test reports, X-rays, and other medical records with ease.</p>
+                        </div>
+                        
+                        <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                            <div style="color: #f59e0b; font-size: 2rem; margin-bottom: 1rem;">💻</div>
+                            <p style="color: #4a5568; line-height: 1.6;">Get clear, reliable guidance through secure video consultations—all from the comfort of your home or office.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2.5rem; border-radius: 16px; color: white; margin: 2rem 0;">
+                        <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 1rem;">Our mission is simple: to provide you with clarity and confidence in your treatment decisions, without the need for a traditional hospital visit.</p>
+                        <p style="font-size: 1.3rem; font-weight: 700;">Medbridge • Simplifying Second Opinions • Empowering Better Decisions</p>
+                    </div>
+                    
+                    <button class="hero-cta fade-in-up" onclick="showScreen('mou')" style="margin-top: 2rem;">Start Consultation</button>
+                </div>
             </div>
         </section>
 
@@ -1435,7 +1472,6 @@
         // Specialty selection
         function selectSpecialty(specialty) {
             selectedSpecialty = specialty;
-            localStorage.setItem('selectedSpecialty', specialty);
             showScreen('mou');
         }
 
@@ -1515,8 +1551,6 @@
         function loadCalendar() {
             const grid = document.getElementById('calendarGrid');
             const today = new Date();
-            const currentMonth = today.getMonth();
-            const currentYear = today.getFullYear();
             
             // Generate next 21 days
             let calendarHTML = '';
@@ -1627,16 +1661,6 @@
                 medications: document.getElementById('medications').value
             };
             
-            // Save booking data
-            localStorage.setItem('bookingData', JSON.stringify({
-                doctor: selectedDoctor,
-                date: selectedDate,
-                time: selectedTime,
-                patient: patientData,
-                files: uploadedFiles
-            }));
-            
-            // Simulate payment process
             alert(`Booking confirmed!\n\nDoctor: ${selectedDoctor.name}\nDate: ${new Date(selectedDate).toLocaleDateString()}\nTime: ${selectedTime}\n\nTotal Paid: ₹2,798\n\nYou will receive confirmation email and calendar invite.`);
             showScreen('dashboard');
         }
@@ -1875,22 +1899,8 @@
             }, 3000);
         }
 
-        // Demo data loader
-        function loadDemoData() {
-            document.getElementById('patientName').value = 'Sunita Sharma';
-            document.getElementById('patientAge').value = '68';
-            document.getElementById('patientGender').value = 'female';
-            document.getElementById('symptoms').value = 'Experiencing chest pain and shortness of breath during physical activity. Blood pressure has been elevated recently.';
-            document.getElementById('medications').value = 'Currently taking Amlodipine 5mg daily for blood pressure';
-        }
-
         // Initialize app
         window.addEventListener('load', function() {
-            // Set up demo data if needed
-            if (localStorage.getItem('demoMode')) {
-                document.getElementById('userName').textContent = 'Rajesh Patel';
-            }
-            
             // Initialize pharmacy
             updateCartDisplay();
         });
@@ -1914,7 +1924,6 @@
         window.proceedToPharmacyCheckout = proceedToPharmacyCheckout;
         window.toggleCart = toggleCart;
         window.startVideoCall = startVideoCall;
-        window.loadDemoData = loadDemoData;
         window.updateBookingButton = updateBookingButton;
     </script>
 </body>
